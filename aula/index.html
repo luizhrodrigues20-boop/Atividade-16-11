@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Cadastro</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f0f2f5;
+            padding: 20px;
+        }
+
+        main {
+            display: flex;
+            width: 850px;
+            max-width: 100%;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        section {
+            flex: 1;
+            padding: 40px;
+        }
+
+        .apresentacao {
+            background: linear-gradient(135deg, #6c63ff, #4834d4);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .apresentacao h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .apresentacao p {
+            line-height: 1.6;
+        }
+
+        .cadastro h2 {
+            color: #333;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .campo {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            color: #444;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #6c63ff;
+            box-shadow: 0 0 5px rgba(108,99,255,0.4);
+        }
+
+        .erro {
+            color: #e63946;
+            font-size: 12px;
+            display: block;
+            margin-top: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            background: #6c63ff;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #4834d4;
+        }
+
+        /* Responsividade */
+        @media (max-width: 650px) {
+            main {
+                flex-direction: column;
+            }
+
+            section {
+                padding: 30px 25px;
+            }
+
+            .apresentacao h1 {
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main>
+
+        <!-- Seção de apresentação -->
+        <section class="apresentacao">
+            <h1>Seja bem-vindo!</h1>
+
+            <p>
+                Crie sua conta e faça parte da nossa comunidade.
+                Preencha seus dados pessoais para realizar
+                seu cadastro de maneira simples e rápida.
+            </p>
+        </section>
+
+        <!-- Seção do formulário -->
+        <section class="cadastro">
+
+            <h2>Faça seu cadastro</h2>
+
+            <form id="formulario">
+
+                <div class="campo">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome"
+                        placeholder="Digite seu nome">
+                    <span class="erro" id="erroNome"></span>
+                </div>
+
+                <div class="campo">
+                    <label for="sobrenome">Sobrenome:</label>
+                    <input type="text" id="sobrenome"
+                        placeholder="Digite seu sobrenome">
+                    <span class="erro" id="erroSobrenome"></span>
+                </div>
+
+                <div class="campo">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email"
+                        placeholder="Digite seu e-mail">
+                    <span class="erro" id="erroEmail"></span>
+                </div>
+
+                <div class="campo">
+                    <label for="senha">Senha:</label>
+                    <input type="password" id="senha"
+                        placeholder="Digite sua senha">
+                    <span class="erro" id="erroSenha"></span>
+                </div>
+
+                <button type="submit">Cadastrar</button>
+
+            </form>
+
+        </section>
+
+    </main>
+
+    <script>
+        const formulario = document.getElementById("formulario");
+
+        formulario.addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            // Capturando os valores
+            const nome = document.getElementById("nome").value.trim();
+            const sobrenome = document.getElementById("sobrenome").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const senha = document.getElementById("senha").value;
+
+            // Limpando mensagens anteriores
+            document.querySelectorAll(".erro").forEach(function(erro) {
+                erro.textContent = "";
+            });
+
+            let valido = true;
+
+            // Validação do nome
+            if (nome === "") {
+                document.getElementById("erroNome").textContent =
+                    "Digite seu nome.";
+                valido = false;
+            }
+
+            // Validação do sobrenome
+            if (sobrenome === "") {
+                document.getElementById("erroSobrenome").textContent =
+                    "Digite seu sobrenome.";
+                valido = false;
+            }
+
+            // Validação do e-mail
+            const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!emailValido.test(email)) {
+                document.getElementById("erroEmail").textContent =
+                    "Digite um e-mail válido.";
+                valido = false;
+            }
+
+            // Validação da senha
+            if (senha.length < 6) {
+                document.getElementById("erroSenha").textContent =
+                    "A senha deve ter pelo menos 6 caracteres.";
+                valido = false;
+            }
+
+            // Resultado
+            if (valido) {
+                alert("Cadastro realizado com sucesso!");
+
+                formulario.reset();
+            }
+
+        });
+    </script>
+
+</body>
+</html>
